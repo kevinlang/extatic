@@ -8,7 +8,7 @@ defmodule Extatic.MixProject do
     [
       app: :extatic,
       version: @version,
-      elixir: "~> 1.8",
+      elixir: "~> 1.11",
       name: "Extatic",
       description: "Static site builder for Elixir built on top of Plug",
       deps: deps(),
