@@ -1,13 +1,19 @@
 defmodule Extatic.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+  @url "https://github.com/kevinlang/extatic"
+
   def project do
     [
       app: :extatic,
-      version: "0.1.0",
-      elixir: "~> 1.12",
-      start_permanent: Mix.env() == :prod,
-      deps: deps()
+      version: @version,
+      elixir: "~> 1.8",
+      name: "Extatic",
+      description: "Static site builder for Elixir built on top of Plug",
+      deps: deps(),
+      docs: docs(),
+      package: package()
     ]
   end
 
@@ -16,6 +22,21 @@ defmodule Extatic.MixProject do
     [
       extra_applications: [:logger]
     ]
+  end
+
+  defp docs do
+    [
+      source_ref: "v#{@version}",
+      source_url: @url
+    ]
+  end
+
+  defp package do
+    %{
+      licenses: ["Apache 2"],
+      maintainers: ["Kevin Lang"],
+      links: %{"GitHub" => @url}
+    }
   end
 
   # Run "mix help deps" to learn about dependencies.

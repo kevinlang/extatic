@@ -1,5 +1,4 @@
 defmodule Extatic.Route do
-
   import Plug.Conn
 
   # render(conn, template)

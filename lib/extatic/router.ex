@@ -1,9 +1,8 @@
 defmodule Extatic.Router do
-
   defmacro __using__(_) do
     quote do
       @before_compile unquote(__MODULE__)
-      Module.register_attribute __MODULE__, :extatic_route_modules, accumulate: true
+      Module.register_attribute(__MODULE__, :extatic_route_modules, accumulate: true)
       import Extatic.Router
     end
   end
@@ -23,5 +22,4 @@ defmodule Extatic.Router do
       end
     end
   end
-
 end
