@@ -3,7 +3,20 @@ defmodule Extatic.Router do
     quote do
       @before_compile unquote(__MODULE__)
       Module.register_attribute(__MODULE__, :extatic_route_modules, accumulate: true)
+      use Plug.Router
       import Extatic.Router
+
+      def child_spec(opts) do
+        %{
+          id: __MODULE__,
+          start: {__MODULE__, :start_link, [opts]},
+          type: :supervisor
+        }
+      end
+
+      def start_link(opts \\ []) do
+        Extatic.Router.Supervisor.start_link(__MODULE__, opts)
+      end
     end
   end
 
