@@ -1,4 +1,6 @@
 defmodule Extatic.Router do
+  import Plug.Conn
+
   defmacro __using__(_) do
     quote do
       @before_compile unquote(__MODULE__)
@@ -34,5 +36,9 @@ defmodule Extatic.Router do
         unquote(module).handle(var!(conn), var!(conn).params)
       end
     end
+  end
+
+  def put_layout(conn, layout_tuple) do
+    assign(conn, :layout, layout_tuple)
   end
 end

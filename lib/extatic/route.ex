@@ -6,7 +6,8 @@ defmodule Extatic.Route do
   # of this individual controllers plug
 
   def render(conn, template, view) do
-    {:safe, content} = Phoenix.View.render(view, template, conn.assigns)
+    render_assigns = Map.put(conn.assigns, :conn, conn)
+    {:safe, content} = Phoenix.View.render(view, template, render_assigns)
 
     conn
     |> put_resp_content_type("text/html")
