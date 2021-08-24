@@ -43,6 +43,7 @@ defmodule Extatic.MixProject do
   defp deps do
     [
       {:plug, "~> 1.12"},
+      {:plug_cowboy, "~> 2.5"},
       {:phoenix_view, "~> 1.0"},
       {:plug_live_reload, "~> 0.1.1", only: :dev}
       # {:dep_from_hexpm, "~> 0.3.0"},
