@@ -19,7 +19,6 @@ defmodule Extatic.Router.Supervisor do
        scheme: :http,
        plug: mod,
        options: [
-         port: 4000,
          dispatch: dispatch(mod)
        ]}
     ]
