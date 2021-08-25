@@ -38,7 +38,24 @@ defmodule Extatic.Router do
     end
   end
 
+  @doc """
+  Puts the layout for the conn.
+
+  Sets the {module, template} tuple on the `:layout` assigns key. This
+  assign is used by `Phoenix.View.render/3` to determine which layout to use
+  when rendering a given view.
+  """
   def put_layout(conn, layout_tuple) do
     assign(conn, :layout, layout_tuple)
+  end
+
+  @doc """
+  Stores the view for rendering.
+
+  This is later used by `Extatic.Route.render/3` to determine which
+  view to use if none is specified.
+  """
+  def put_view(conn, view) do
+    put_private(conn, :extatic_view, view)
   end
 end
