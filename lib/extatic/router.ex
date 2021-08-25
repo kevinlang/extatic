@@ -4,7 +4,7 @@ defmodule Extatic.Router do
   defmacro __using__(_) do
     quote do
       @before_compile unquote(__MODULE__)
-      Module.register_attribute(__MODULE__, :extatic_route_modules, accumulate: true)
+      Module.register_attribute(__MODULE__, :extatic_routes, accumulate: true)
       use Plug.Router
       import Extatic.Router
 
@@ -22,19 +22,32 @@ defmodule Extatic.Router do
     end
   end
 
-  defmacro __before_compile__(_) do
+  defmacro __before_compile__(env) do
+    routes = Module.get_attribute(env.module, :extatic_routes)
+
+    matches =
+      for {path, module} <- routes do
+        quote do
+          get unquote(path) do
+            unquote(module).handle(var!(conn), var!(conn).params)
+          end
+        end
+      end
+
     quote do
-      def __routes__, do: @extatic_route_modules
+      # a list of {path, module} tuples
+      def __routes__, do: @extatic_routes
+
+      plug :match
+      plug :dispatch
+
+      unquote(matches)
     end
   end
 
   defmacro route(path, module) do
     quote do
-      @extatic_route_modules unquote(module)
-
-      get unquote(path) do
-        unquote(module).handle(var!(conn), var!(conn).params)
-      end
+      @extatic_routes {unquote(path), unquote(module)}
     end
   end
 
