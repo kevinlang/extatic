@@ -1,5 +1,4 @@
 defmodule Extatic.Router do
-  import Plug.Conn
 
   defmacro __using__(_) do
     quote do
@@ -42,6 +41,11 @@ defmodule Extatic.Router do
       plug :dispatch
 
       unquote(matches)
+
+      match _ do
+        path   = "/" <> Enum.join(var!(conn).path_info, "/")
+        raise "no route found for #{path}"
+      end
     end
   end
 
@@ -50,6 +54,8 @@ defmodule Extatic.Router do
       @extatic_routes {unquote(path), unquote(module)}
     end
   end
+
+  import Plug.Conn
 
   @doc """
   Puts the layout for the conn.
