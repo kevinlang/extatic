@@ -5,6 +5,7 @@ defmodule Extatic.Router do
       @before_compile unquote(__MODULE__)
       Module.register_attribute(__MODULE__, :extatic_routes, accumulate: true)
       use Plug.Router
+      use PlugSocket
       import Extatic.Router
 
       def child_spec(opts) do

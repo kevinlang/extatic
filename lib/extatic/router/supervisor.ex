@@ -19,33 +19,10 @@ defmodule Extatic.Router.Supervisor do
        scheme: :http,
        plug: mod,
        options: [
-         dispatch: dispatch(mod)
+         dispatch: PlugSocket.plug_cowboy_dispatch(mod)
        ]}
     ]
   end
-
-  def dispatch(mod),
-    do: [
-      {:_,
-      [
-        {"/plug_live_reload/socket", PlugLiveReload.Socket, []},
-        {:_, Plug.Cowboy.Handler, {mod, []}}
-      ]}
-    ]
-
-
-  # if Mix.env() == :dev do
-  #   def dispatch(mod),
-  #     do: IO.puts "HI" && [
-  #       {:_,
-  #        [
-  #          {"/plug_live_reload/socket", PlugLiveReload.Socket, []},
-  #          {:_, Plug.Cowboy.Handler, {mod, []}}
-  #        ]}
-  #     ]
-  # else
-  #   def dispatch(_mod), do: nil
-  # end
 
   defp watcher_children() do
     Enum.map(Application.get_env(:extatic, :watchers, []), &{Extatic.Watcher, &1})
