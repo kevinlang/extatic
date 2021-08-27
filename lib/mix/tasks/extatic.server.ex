@@ -6,11 +6,7 @@ defmodule Mix.Tasks.Extatic.Server do
   @moduledoc """
   Starts the application.
 
-  ## Command line options
-
-    * `--open` - open browser window for each started endpoint
-
-  Furthermore, this task accepts the same command-line options as
+  This task accepts the same command-line options as
   `mix run`.
 
   For example, to run `extatic.server` without recompiling:
@@ -29,7 +25,7 @@ defmodule Mix.Tasks.Extatic.Server do
 
   @impl true
   def run(args) do
-    Application.put_env(:extatic, :serve_router, true, persistent: true)
+    Application.put_env(:extatic, :serve_router, true)
     Mix.Tasks.Run.run(args ++ run_args())
   end
 
